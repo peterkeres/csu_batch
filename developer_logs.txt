@@ -1,0 +1,30 @@
+Peter keres and Benjamin Larsen
+September 16 2019
+Software systems, CSU batch PROJECT
+
+this file will hold any developers time spent coding on the project/ notes about what they did during there coding session
+This will server the purpose of helping other developer to know what is the next task to be done.Or problems the other developer ran into during there session
+Before any developers session the developer should send out a email to the rest of the team to inform them that they are about to start there coding session
+After there session is done, the developer should update this document with there session notes, upload the code to github, and email the other developers of a finished session
+
+in this developer log, you can be as details / vague as sees fit.
+Don't be scared to put line numbers if there is a spot in the code that is causing an error and need help
+Please copy and past the following format and fill into the slots as needed.
+Please keep copy of the format here so others can copy and past to help with the formatting of this document
+
+
+================================================================================
+================================================================================
+================================================================================
+DEVELOPER NAME
+DATE
+
+PLAN FOR SESSION: (ENTER TEXT HERE)
+
+WHAT I DID IN SESSION: (ENTER TEXT HERE)
+
+WHAT IS NEXT MOVE/ PROBLEM DURING SESSION: (ENTER TEXT HERE)
+
+================================================================================
+================================================================================
+================================================================================
