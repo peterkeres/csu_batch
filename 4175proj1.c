@@ -111,12 +111,12 @@ int main(){
 }
 
 
-
+// test methods for calling threads to make sure i got it right, delete later
 void * stuff(){
 	puts("method called by the first thread \n");
 	pthread_exit(NULL);
 }
-
+// test methods for calling threads to make sure i got it right, delete later
 void * stuff2(void * num){
 	puts(" method called by the second thread \n");
 
