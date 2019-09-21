@@ -19,11 +19,39 @@ Please keep copy of the format here so others can copy and past to help with the
 DEVELOPER NAME
 DATE
 
-PLAN FOR SESSION: (ENTER TEXT HERE)
+PLAN FOR SESSION:
+  (ENTER TEXT HERE)
 
-WHAT I DID IN SESSION: (ENTER TEXT HERE)
+WHAT I DID IN SESSION:
+  (ENTER TEXT HERE)
 
-WHAT IS NEXT MOVE/ PROBLEM DURING SESSION: (ENTER TEXT HERE)
+WHAT IS NEXT MOVE/ PROBLEM DURING SESSION:
+  (ENTER TEXT HERE)
+
+================================================================================
+================================================================================
+================================================================================
+
+
+START:
+================================================================================
+================================================================================
+================================================================================
+Peter keres
+sep 21
+
+PLAN FOR SESSION:
+  wanted to mess around with threads. also to remember how to code in c. its been a minute.
+
+WHAT I DID IN SESSION:
+  got 2 threads going. I dont have a mutex right now or antyhing like that. Just got 2 threads up and running.
+  they both go off do something and close right. Also created the start of the 'scheduling model' class. 
+  Got a thread to go into that class and run whatever method was there.
+
+WHAT IS NEXT MOVE/ PROBLEM DURING SESSION:
+  add lots of commits  and wording to clean the whole code base up. I just kinda threw my stuff in there without explaing much.
+  once its cleaned up and looking right, step 1 of the project is done
+  will move on to step 2.
 
 ================================================================================
 ================================================================================
