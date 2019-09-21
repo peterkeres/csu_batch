@@ -32,7 +32,8 @@ void addJob(struct jobQ* jobQ, struct job job){
 struct job removeJob(struct jobQ* jobQ){
 	if(isEmpty(jobQ)){
 		printf("Job queue is emtpy.\n");
-		return;
+		// need to have somthing return, get compile error
+		//return;
 	}
 	struct job job = jobQ->jobs[jobQ->first];
 	jobQ->first = (jobQ->first + 1) % jobQ->numJobs;
@@ -47,9 +48,8 @@ void printQ(struct jobQ* jobQ){
 	}
 	struct job* jobs = jobQ->jobs;
 	int i = 0;
-	
+
 	for(i = 0; i < jobQ->size; ++i){
 		printf("Job name: %s\n", jobQ->jobs[i].jobName);
 	}
 }
-
