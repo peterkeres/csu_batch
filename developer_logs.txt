@@ -45,13 +45,45 @@ PLAN FOR SESSION:
 
 WHAT I DID IN SESSION:
   got 2 threads going. I dont have a mutex right now or antyhing like that. Just got 2 threads up and running.
-  they both go off do something and close right. Also created the start of the 'scheduling model' class. 
+  they both go off do something and close right. Also created the start of the 'scheduling model' class.
   Got a thread to go into that class and run whatever method was there.
 
 WHAT IS NEXT MOVE/ PROBLEM DURING SESSION:
   add lots of commits  and wording to clean the whole code base up. I just kinda threw my stuff in there without explaing much.
   once its cleaned up and looking right, step 1 of the project is done
   will move on to step 2.
+
+================================================================================
+================================================================================
+================================================================================
+
+
+================================================================================
+================================================================================
+================================================================================
+Peter keres
+sep 21
+
+PLAN FOR SESSION:
+  wanted to find out how to call other programs to from within our csu batch program.
+  Aka running batch files
+
+WHAT I DID IN SESSION:
+figured out how the 'execv' function. this function is what runs other programs.
+when it runs, it replaces the current running process with the call. aka our program will stop and be replaced by the called one
+inorder to get around this, we need to call the fork function to make another process for the execv to run on.
+this will run the other program and when its done, not kill ours in the process
+
+the execv is sent 2 parameters, firs being the location of the program to be run
+the next being an array of arguments, first being the location of the program and the last being a null value
+everything in-between is any arguments needed for the program to run
+
+also made an example 'batch' file to run, its called example_batch
+its not a full on batch file but it should work all the same
+
+WHAT IS NEXT MOVE/ PROBLEM DURING SESSION:
+  next is to get the system i have working with the job batch queue.
+  need to set up mutexs probally, get the product consumer model working. 
 
 ================================================================================
 ================================================================================
