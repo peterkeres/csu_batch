@@ -74,51 +74,67 @@ int main(){
 	int status_schedual, status_dispatch;
 	int num = 5;
 
+	// creads the thread, calls the method stuff with that threads
 	status_schedual = pthread_create(&thread_schedual, NULL, stuff, NULL);
+	// makes sure the thread was created
 	if (status_schedual != 0) {
 		puts("schedual fialed on creation");
 		exit(-1);
 	}
 
+	//creates the thread, calls the method suff2 wih that thread
 	status_dispatch = pthread_create(&thread_dispatch, NULL, stuff2, (void *) &num);
+	// maes sure the thread was created
 	if (status_dispatch != 0) {
 		puts("dispatch failed on creation");
 		exit(-1);
 	}
 
-
+	// ends the 2 threads
 	pthread_join(thread_schedual,NULL);
 	pthread_join(thread_dispatch, NULL);
 
 	printf("status_schedual returns: %d\n",status_schedual );
 	printf("status_dispatch returns: %d\n",status_dispatch );
 
+	// creates a thread and calls a test function in another file, sends it a number
 	puts("Calling method in other file with thread_schedual\n");
-
 	status_schedual = pthread_create(&thread_schedual, NULL, test, (void *) &num);
+	// makes sure the thread was created
 	if (status_schedual != 0) {
 		puts("schedual fialed on creation");
 		exit(-1);
 	}
 
-
+	// ends the thread
 	pthread_join(thread_schedual,NULL);
+	// this just calls the method in another file
 	puts("calling method in other file wihtout thread\n");
 	test((void*) &num);
 
 	/*
+	// the execv function runs another program
 	puts("going to call the other program using execv, wish me luck\n");
+	// this array of chars is what gets sent to the execv fucntion
+	// first part of the array is the path to the file you want to run
+	// last part of the array must end in NULL
+	// nay part inbetween is used for if the program your callling needs inputs
 	char *args[] = {"./example_batch", NULL};
 	execv(args[0], args);
 	*/
 
+	// calling the example_batch file that is in this directory
 	char *args[] = {"./example_batch", NULL};
 	puts("going to call the exexc within an another fiel using a thread. this would be great is worked!");
+	// creat a new thread that calls the start fruntion of the dispatch file
+	// we send it the args needed for the execv fution
 	status_schedual = pthread_create(&thread_schedual, NULL, start, (void *) &args);
+	// makes sure the thread was created
 	if (status_schedual != 0) {
 		puts("schedual fialed on creation");
 		exit(-1);
 	}
+	// ends the thread 
 	pthread_join(thread_schedual,NULL);
 
 
