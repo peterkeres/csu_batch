@@ -5,6 +5,8 @@
 #include "jobQueue.h"
 #include "commandline.c"
 #include "schedual_model.h"
+#include "dispatching_model.h"
+#include	<unistd.h>
 
 /*
 // i comment this out becuase i was going to work on threads and didnt want to mess up your work
@@ -103,6 +105,22 @@ int main(){
 	pthread_join(thread_schedual,NULL);
 	puts("calling method in other file wihtout thread\n");
 	test((void*) &num);
+
+	/*
+	puts("going to call the other program using execv, wish me luck\n");
+	char *args[] = {"./example_batch", NULL};
+	execv(args[0], args);
+	*/
+
+	char *args[] = {"./example_batch", NULL};
+	puts("going to call the exexc within an another fiel using a thread. this would be great is worked!");
+	status_schedual = pthread_create(&thread_schedual, NULL, start, (void *) &args);
+	if (status_schedual != 0) {
+		puts("schedual fialed on creation");
+		exit(-1);
+	}
+	pthread_join(thread_schedual,NULL);
+
 
 	puts("end of program, both threads joined");
 

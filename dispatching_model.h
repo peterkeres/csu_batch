@@ -8,3 +8,6 @@ this ill hold the 'execv' fucntion that will run the batch file given
 
 should also send off any data to the 'performace modeul' as needed
 */
+
+
+void start(void * args[]);
