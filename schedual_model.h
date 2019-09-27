@@ -8,5 +8,8 @@ to happen in the csu batch system.
 */
 
 
+extern pthread_mutex_t queMutex;
+extern pthread_cond_t queCond;
+extern struct jobQ* jobQueue;
 
-void test(void * num);
+void test3();

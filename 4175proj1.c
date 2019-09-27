@@ -8,6 +8,7 @@
 #include "dispatching_model.h"
 #include	<unistd.h>
 
+
 /*
 // i comment this out becuase i was going to work on threads and didnt want to mess up your work
 // just comment out my main when you want to go back to your work
@@ -61,9 +62,52 @@ each thread will cal a file: schedual and dispatching
 they each will run some simple printjust to make sure this works
 */
 
-void * stuff ();
-void * stuff2 (void * num);
+pthread_t thread_schedual, thread_dispatch;
+pthread_mutex_t queMutex;
+pthread_cond_t queCond;
+int status_schedual, status_dispatch;
+struct jobQ* jobQueue;
 
+int main(){
+
+	puts("SYSTEM START UP\N");
+	// createing the 2 threads mutext and the singal
+
+	jobQueue = buildJobQ(100);
+	pthread_mutex_init(&queMutex,NULL);
+	pthread_cond_init(&queCond,NULL);
+
+
+	// creads the thread, calls the method stuff with that threads
+	status_schedual = pthread_create(&thread_schedual, NULL, test3, NULL);
+	// makes sure the thread was created
+	if (status_schedual != 0) {
+		puts("schedual fialed on creation");
+		exit(-1);
+	}
+
+
+	//creates the thread, calls the method suff2 wih that thread
+	status_dispatch = pthread_create(&thread_dispatch, NULL, nextJob, NULL);
+	// maes sure the thread was created
+	if (status_dispatch != 0) {
+		puts("dispatch failed on creation");
+		exit(-1);
+	}
+
+
+	// ends the 2 threads
+	pthread_join(thread_schedual,NULL);
+	pthread_join(thread_dispatch, NULL);
+
+
+	puts("END OF PROGRAM");
+	return 0;
+}
+
+
+
+/*
 int main(){
 
 	puts("hello, seeing if compile works!");
@@ -121,10 +165,10 @@ int main(){
 	// nay part inbetween is used for if the program your callling needs inputs
 	char *args[] = {"./example_batch", NULL};
 	execv(args[0], args);
-	*/
+
 
 	// calling the example_batch file that is in this directory
-	char *args[] = {"./example_batch", NULL};
+	char *args[] = {"example_batch", NULL};
 	puts("going to call the exexc within an another fiel using a thread. this would be great is worked!");
 	// creat a new thread that calls the start fruntion of the dispatch file
 	// we send it the args needed for the execv fution
@@ -134,30 +178,27 @@ int main(){
 		puts("schedual fialed on creation");
 		exit(-1);
 	}
-	// ends the thread 
+	// ends the thread
 	pthread_join(thread_schedual,NULL);
 
+	puts("testing makeing a job que and running from job que\n");
+
+	struct jobQ* jobQueue = buildJobQ(100);
+	struct job test;
+
+	test.jobName = "example_batch";
+
+	addJob(jobQueue, test);
+	printQ(jobQueue);
+
+	char name[] = "hello";
+	printf("%s\n",name);
+
+	nextJob(jobQueue);
 
 	puts("end of program, both threads joined");
 
 
 	return 0;
 }
-
-
-// test methods for calling threads to make sure i got it right, delete later
-void * stuff(){
-	puts("method called by the first thread \n");
-	pthread_exit(NULL);
-}
-// test methods for calling threads to make sure i got it right, delete later
-void * stuff2(void * num){
-	puts(" method called by the second thread \n");
-
-	int* number = (int*) num;
-
-	printf("number is : %d\n", *number);
-
-	pthread_exit(NULL);
-
-}
+*/

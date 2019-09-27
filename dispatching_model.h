@@ -10,4 +10,10 @@ should also send off any data to the 'performace modeul' as needed
 */
 
 
-void start(void * args[]);
+extern pthread_mutex_t queMutex;
+extern pthread_cond_t queCond;
+extern struct jobQ* jobQueue;
+
+void job_exe(void * args[]);
+
+void nextJob();
