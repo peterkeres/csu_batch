@@ -21,26 +21,32 @@ also in chagre of changing the que order when a policiy change happens.
 #include "jobQueue.h"
 
 
+// this will creat the jobs that go into the jobQueue
+// testing: as of right now, the jobs are hardcoded in, later we will grab from user
+void newJob(){
 
-void test3(){
+  // create 2 jobs
   struct job test;
   struct job test2;
 
+  // give each job a file path to an exe
 	test.jobName = "example_batch";
   test2.jobName = "example_batch";
 
-  pthread_mutex_lock(&queMutex);
+  pthread_mutex_lock(&queMutex);// locks the other thread from messing with the jobQueue
 
-	addJob(jobQueue, test);
+	addJob(jobQueue, test);// add a job to the job queue
   for (size_t i = 0; i < 100; i++) {
     // just to make sure the mutext is working have it suck in this thread for a bit
   }
-  addJob(jobQueue, test2);
+  addJob(jobQueue, test2);// add job2 to the jobQueue
 
-  pthread_cond_signal(&queCond);
+  pthread_cond_signal(&jobsInQue);// let the other thread know there are jobs in the jobQueue now
 
-  pthread_mutex_unlock(&queMutex);
+  pthread_mutex_unlock(&queMutex);  // unlocks the other thread, it can now mess with the jobQueue
 
+
+  // testing: becuase only doing 2 hard coded jobs, we can just kill this thread now
   pthread_exit(NULL);
 
 }

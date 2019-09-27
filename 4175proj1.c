@@ -62,24 +62,25 @@ each thread will cal a file: schedual and dispatching
 they each will run some simple printjust to make sure this works
 */
 
-pthread_t thread_schedual, thread_dispatch;
-pthread_mutex_t queMutex;
-pthread_cond_t queCond;
-int status_schedual, status_dispatch;
-struct jobQ* jobQueue;
+// ALL GLOBAL VERALBES
+pthread_t thread_schedual, thread_dispatch;// the 2 threads we will be using
+pthread_mutex_t queMutex;// the mutex that will stop other threads from messing with the jobQueue
+pthread_cond_t jobsInQue;// a singal to let other thread know there are jobs in the que
+int status_schedual, status_dispatch; // ids of the threads
+struct jobQ* jobQueue;// the jobQueue data structre that holds all the jobs
 
 int main(){
 
 	puts("SYSTEM START UP\N");
-	// createing the 2 threads mutext and the singal
 
+	// createing the jobQueue and the mutex and the signal verable
 	jobQueue = buildJobQ(100);
 	pthread_mutex_init(&queMutex,NULL);
-	pthread_cond_init(&queCond,NULL);
+	pthread_cond_init(&jobsInQue,NULL);
 
 
-	// creads the thread, calls the method stuff with that threads
-	status_schedual = pthread_create(&thread_schedual, NULL, test3, NULL);
+	// creads the thread, calls the method test3 with that threads
+	status_schedual = pthread_create(&thread_schedual, NULL, newJob, NULL);
 	// makes sure the thread was created
 	if (status_schedual != 0) {
 		puts("schedual fialed on creation");
@@ -87,9 +88,9 @@ int main(){
 	}
 
 
-	//creates the thread, calls the method suff2 wih that thread
+	//creates the thread, calls the method nextJob wih that thread
 	status_dispatch = pthread_create(&thread_dispatch, NULL, nextJob, NULL);
-	// maes sure the thread was created
+	// makes sure the thread was created
 	if (status_dispatch != 0) {
 		puts("dispatch failed on creation");
 		exit(-1);

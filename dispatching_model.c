@@ -15,33 +15,41 @@ should also send off any data to the 'performace modeul' as needed
 #include "jobQueue.h"
 #include "dispatching_model.h"
 
+
+// this is for testing, helps with leting the program end nicely with nubmer of jobs we hard coded
   int count = 0;
 
+// this should run forever untill the user enters quit
+// testing: we just kill the thread after it does 2 jobs
 void nextJob(){
 
   while(1){
+    // testing stuff
     printf("at pass number %d\n",count );
     count++;
+
+    // locks out the other threads from messing with the jobQueue
     pthread_mutex_lock(&queMutex);
 
+    // if the jobQueue is empty, we wait until told there is somthing in the jobQueue
     while( isEmpty(jobQueue) ){
-
-        pthread_cond_wait(&queCond, &queMutex);
+        // waits untill told by the signal
+        pthread_cond_wait(&jobsInQue, &queMutex);
     }
 
-
+    // gets the next job from the jobQueue
     struct job nextjob = removeJob(jobQueue);
 
+    // frees up the jobQueue, got what we needed
     pthread_mutex_unlock(&queMutex);
 
 
+    // takes out the name from the job object, sends it to the job_exe() which will run the job
     char * name = nextjob.jobName;
-
     char * args[] = {name,NULL};
-
     job_exe((void*) &args);
 
-
+    // testing: when we do 2 jobs, just kill this thread. aka end the program
     if (count == 2) {
       pthread_exit(NULL);
     }
@@ -52,11 +60,10 @@ void nextJob(){
 
 
 
-
+// this will excute a job given
 void job_exe(void * args[]){
 
   puts("in the dispatching_module, about to run the other program");
-
 
   // the id of the new created process aka the fork
   pid_t pid;

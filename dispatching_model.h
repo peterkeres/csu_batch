@@ -9,9 +9,9 @@ this ill hold the 'execv' fucntion that will run the batch file given
 should also send off any data to the 'performace modeul' as needed
 */
 
-
+// this lets us get the varables that are globale in the main. c file
 extern pthread_mutex_t queMutex;
-extern pthread_cond_t queCond;
+extern pthread_cond_t jobsInQue;
 extern struct jobQ* jobQueue;
 
 void job_exe(void * args[]);
