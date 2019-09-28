@@ -109,8 +109,10 @@ WHAT I DID IN SESSION:
 
   added another example batch file for testing purposes.
 
+  also added the make file.
+
 WHAT IS NEXT MOVE/ PROBLEM DURING SESSION:
-  implement the UI elements of the project 
+  implement the UI elements of the project
 
 ================================================================================
 ================================================================================
