@@ -83,7 +83,34 @@ its not a full on batch file but it should work all the same
 
 WHAT IS NEXT MOVE/ PROBLEM DURING SESSION:
   next is to get the system i have working with the job batch queue.
-  need to set up mutexs probally, get the product consumer model working. 
+  need to set up mutexs probally, get the product consumer model working.
+
+================================================================================
+================================================================================
+================================================================================
+
+
+================================================================================
+================================================================================
+================================================================================
+Peter keres
+sep 27
+
+PLAN FOR SESSION:
+  implement the 'producer and consumer' model into our current system.
+
+WHAT I DID IN SESSION:
+  got the current system to interact with the jobQueue. We can add jobs to this
+  que in one thread. the other thread will execute it.
+
+  added both mutex's and pthread conditionals. between the both of these, the two
+  threads will not interact with the jobQueue at the same time. therefore, no
+  conflicting errors can happen.
+
+  added another example batch file for testing purposes.
+
+WHAT IS NEXT MOVE/ PROBLEM DURING SESSION:
+  implement the UI elements of the project 
 
 ================================================================================
 ================================================================================

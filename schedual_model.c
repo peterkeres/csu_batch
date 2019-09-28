@@ -31,9 +31,15 @@ void newJob(){
 
   // give each job a file path to an exe
 	test.jobName = "example_batch";
-  test2.jobName = "example_batch";
+  test2.jobName = "example_batch2";
 
   pthread_mutex_lock(&queMutex);// locks the other thread from messing with the jobQueue
+
+  // this to stop from adding to the jobQueue if the job queue is currently full
+  while ( isFull(jobQueue) ){
+    // wait unitll the jobQueue is not full anymore, open spot
+    pthread_cond_wait(&queNotFull, &queMutex);
+  }
 
 	addJob(jobQueue, test);// add a job to the job queue
   for (size_t i = 0; i < 100; i++) {

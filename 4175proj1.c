@@ -66,18 +66,19 @@ they each will run some simple printjust to make sure this works
 pthread_t thread_schedual, thread_dispatch;// the 2 threads we will be using
 pthread_mutex_t queMutex;// the mutex that will stop other threads from messing with the jobQueue
 pthread_cond_t jobsInQue;// a singal to let other thread know there are jobs in the que
+pthread_cond_t queNotFull;// a singal to let other threads know there is room in the job que
 int status_schedual, status_dispatch; // ids of the threads
 struct jobQ* jobQueue;// the jobQueue data structre that holds all the jobs
 
 int main(){
 
-	puts("SYSTEM START UP\N");
+	puts("SYSTEM START UP\n");
 
 	// createing the jobQueue and the mutex and the signal verable
 	jobQueue = buildJobQ(100);
 	pthread_mutex_init(&queMutex,NULL);
 	pthread_cond_init(&jobsInQue,NULL);
-
+	pthread_cond_init(&queNotFull,NULL);
 
 	// creads the thread, calls the method test3 with that threads
 	status_schedual = pthread_create(&thread_schedual, NULL, newJob, NULL);
@@ -102,7 +103,7 @@ int main(){
 	pthread_join(thread_dispatch, NULL);
 
 
-	puts("END OF PROGRAM");
+	puts("\nEND OF PROGRAM\n");
 	return 0;
 }
 
