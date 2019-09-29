@@ -1,10 +1,13 @@
+
+
+
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
 #include "jobQueue.h"
-#include "commandline.c"
-#include "schedual_model.h"
+#include "commandline.h"
+#include "schedule_model.h"
 #include "dispatching_model.h"
 #include	<unistd.h>
 
@@ -81,7 +84,7 @@ int main(){
 	pthread_cond_init(&queNotFull,NULL);
 
 	// creads the thread, calls the method test3 with that threads
-	status_schedual = pthread_create(&thread_schedual, NULL, newJob, NULL);
+	status_schedual = pthread_create(&thread_schedual, NULL, schedule_start, NULL);
 	// makes sure the thread was created
 	if (status_schedual != 0) {
 		puts("schedual fialed on creation");

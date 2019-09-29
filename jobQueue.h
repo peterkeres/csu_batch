@@ -1,8 +1,12 @@
 /*
  * Ben Larsen
  * 20190928
- * 
+ *
  */
+
+#ifndef	JOBQUEUE_H
+#define JOBQUEUE_H
+
 
 struct job{
 	int priority;
@@ -18,6 +22,7 @@ struct jobQ{
 	char* schedPol;
 	struct job* jobs;
 };
+
 struct jobQ* buildJobQ(int capacity);
 int isFull(struct jobQ* jobQ);
 int isEmpty(struct jobQ* jobQ);
@@ -27,3 +32,6 @@ void printQ(struct jobQ* jobQ);
 void swap(struct job* a, struct job* b);
 int partition (struct job arr[], int low, int high, int schedPol);
 void quickSort(struct job arr[], int low, int high, int schedPol);
+
+
+#endif

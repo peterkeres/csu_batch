@@ -4,6 +4,8 @@
  * data structure for storing, maintaining and sorting a job queue
  */
 
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "jobQueue.h"
@@ -81,9 +83,9 @@ void printQ(struct jobQ* jobQ){
 		int i = 0;
 		printf("Name\tCPU time\tPri\tArrival Time\tProgress\n");
 		for(i = 0; i < jobQ->size; ++i){
-			printf("%s\t  %i\t\t%i\t\t%i\t%s\n", jobQ->jobs[i].jobName, jobQ->jobs[i].timeToComplete, jobQ->jobs[i].priority, jobQ->jobs[i].arrivalTime, 
+			printf("%s\t  %i\t\t%i\t\t%i\t%s\n", jobQ->jobs[i].jobName, jobQ->jobs[i].timeToComplete, jobQ->jobs[i].priority, jobQ->jobs[i].arrivalTime,
 			jobQ->jobs[i].progress);
-			
+
 		}
 	}
 }
@@ -92,55 +94,54 @@ void printQ(struct jobQ* jobQ){
 /*
  * swaps to jobs in the job queue
  */
-void swap(struct job* a, struct job* b) { 
-    struct job t = *a; 
-    *a = *b; 
-    *b = t; 
-} 
+void swap(struct job* a, struct job* b) {
+    struct job t = *a;
+    *a = *b;
+    *b = t;
+}
 /*
  *modified prtition function for sorting the queue
- *int schedPol is added to sort the array of jobs 
+ *int schedPol is added to sort the array of jobs
  *based on a specified scheduling policy
  */
-int partition (struct job arr[], int low, int high, int schedPol) { 
+int partition (struct job arr[], int low, int high, int schedPol) {
     struct job pivot = arr[high];
     int i = (low - 1);
 	int j;
 	if(schedPol == 1){//shortest job first
-		for (j = low; j <= high- 1; j++) { 
-        	if (arr[j].timeToComplete < pivot.timeToComplete) { 
+		for (j = low; j <= high- 1; j++) {
+        	if (arr[j].timeToComplete < pivot.timeToComplete) {
             	i++;
-            	swap(&arr[i], &arr[j]); 
-        	} 
-    	} 
+            	swap(&arr[i], &arr[j]);
+        	}
+    	}
 	}else if(schedPol == 2){//priority
-		for (j = low; j <= high- 1; j++) { 
-        	if (arr[j].priority < pivot.priority) { 
+		for (j = low; j <= high- 1; j++) {
+        	if (arr[j].priority < pivot.priority) {
             	i++;
-            	swap(&arr[i], &arr[j]); 
-        	} 
-    	} 
+            	swap(&arr[i], &arr[j]);
+        	}
+    	}
 	}else if(schedPol == 3){//first come, first serve
-		for (j = low; j <= high- 1; j++) { 
-        	if (arr[j].arrivalTime < pivot.arrivalTime) { 
+		for (j = low; j <= high- 1; j++) {
+        	if (arr[j].arrivalTime < pivot.arrivalTime) {
             	i++;
-            	swap(&arr[i], &arr[j]); 
-        	} 
-    	} 
+            	swap(&arr[i], &arr[j]);
+        	}
+    	}
 	}
-    
-    swap(&arr[i + 1], &arr[high]); 
-    return (i + 1); 
-} 
+
+    swap(&arr[i + 1], &arr[high]);
+    return (i + 1);
+}
 /*
  *quick sort modified for sorting based on scheduling policy
  */
-void quickSort(struct job arr[], int low, int high, int schedPol) { 
-    if (low < high){ 
-        int pi = partition(arr, low, high, schedPol); 
-  
-        quickSort(arr, low, pi - 1,schedPol); 
-        quickSort(arr, pi + 1, high, schedPol); 
-    } 
-} 
+void quickSort(struct job arr[], int low, int high, int schedPol) {
+    if (low < high){
+        int pi = partition(arr, low, high, schedPol);
 
+        quickSort(arr, low, pi - 1,schedPol);
+        quickSort(arr, pi + 1, high, schedPol);
+    }
+}

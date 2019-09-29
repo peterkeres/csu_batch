@@ -1,8 +1,10 @@
 /*
  * (modified by Ben Larsen, Sep. 28, 2019)
- * 
+ *
  */
- 
+
+
+
 #include <sys/types.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -10,13 +12,14 @@
 #include <string.h>
 #include "schedule_model.h"
 #include "jobQueue.h"
+#include "commandline.h"
 
 /* Error Code */
 #define EINVAL       1
 #define E2BIG        2
 
 #define MAXMENUARGS  8
-#define MAXCMDLINE   128 
+#define MAXCMDLINE   128
 int subJobs = 0;
 double avgCPU = 0.0;
 double avgWait = 0.0;
@@ -31,7 +34,7 @@ int cmd_run(int nargs, char **args, struct jobQ* jobQueue) {
 		printf("Usage: run <job> <time> <priority>\n");
 		return EINVAL;
 	}
-   
+
 	struct job newJob;//creates a new job from the provided arguments
 	newJob.jobName = strdup(args[1]);//this is the job name
 	newJob.arrivalTime = atoi(args[2]);// this is the arrival time
@@ -42,10 +45,10 @@ int cmd_run(int nargs, char **args, struct jobQ* jobQueue) {
 	scheduleJob(jobQueue, newJob);// schedules the new job and adds it to the job queue
 	subJobs++;// increments the number of jobs
 	avgCPU = avgCPU + newJob.timeToComplete;//increment total cpu time
-	
-	printf("Job %s was submitted.\nTotal number of jobs in the queue: %i\nExpected waiting time: %i seconds\nScheduling Policy: %s.\n", 
+
+	printf("Job %s was submitted.\nTotal number of jobs in the queue: %i\nExpected waiting time: %i seconds\nScheduling Policy: %s.\n",
 	newJob.jobName, jobQueue->size, newJob.timeToComplete, jobQueue->schedPol);
-	
+
 	/* Use execv to run the submitted job in csubatch */
 	//printf("use execv to run the job in csubatch.\n");
 	return 0; /* if succeed */
@@ -68,7 +71,7 @@ void showmenu(const char *name, const char *x[])
 
 	printf("\n");
 	printf("%s\n", name);
-	
+
 	for (i=ct=0; x[i]; i++) {
 		ct++;
 	}
@@ -118,7 +121,7 @@ int cmd_schedule_policy(int narg, char** args, struct jobQ* jobQueue){
 	char* sjf = "sjf\n";
 	char* fcfs = "fcfs\n";
 	char* prio = "priority\n";
-	
+
 	//Comparing the user submitted srgument to the defined policies above:
 	if(strcmp(sjf, schedPol) == 0){
 		jobQueue->schedInt = 1;//set the integer for the job queue to be 1 corresponding to sjf
@@ -155,7 +158,7 @@ int cmd_test(int narg, char** args, struct jobQ* jobQueue){
 		//				0		1			2		3					4				5				6
 		return EINVAL;
 	}
-	
+
 	//Grabbing the user submitted values from args array:
 	char* benchmark = strdup(args[1]);
 	char* policy = strdup(args[2]);
@@ -163,20 +166,20 @@ int cmd_test(int narg, char** args, struct jobQ* jobQueue){
 	int priorityLvl = atoi(args[4]);
 	int minCPU = atoi(args[5]);
 	int maxCPU = atoi(args[6]);
-	
+
 	//Doing some random maths to generate performance data:
 	double turnAround = (double)(numJobs + minCPU + maxCPU) / 3;
 	double cpuTime = (double)(minCPU + maxCPU + numJobs) / numJobs;
 	double waitTime = (double)(maxCPU + priorityLvl) / numJobs;
 	double throughput = (double)priorityLvl / numJobs;
-	
+
 	//Displaying the performance information:
 	printf("Total number of job submitted: \t%i\n", numJobs);
 	printf("Average turnaround time:  \t%.3f seconds\n", turnAround);
 	printf("Average CPU time: \t%.3f seconds\n", cpuTime);
 	printf("Average waiting time: \t%.3f seconds\n", waitTime);
 	printf("Throughput: \t\t%.3f No./second\n", throughput);
-	
+
 	return 0;
 }
 
@@ -236,7 +239,7 @@ int cmd_dispatch(char *cmd, struct jobQ* jobQueue)
 	for (i=0; cmdtable[i].name; i++) {
 		if (*cmdtable[i].name && !strcmp(args[0], cmdtable[i].name)) {
 			assert(cmdtable[i].func!=NULL);
-            
+
             /* Call function through the cmd_table */
 			result = cmdtable[i].func(nargs, args, jobQueue);
 			return result;
@@ -246,5 +249,3 @@ int cmd_dispatch(char *cmd, struct jobQ* jobQueue)
 	printf("%s: Command not found\n", args[0]);
 	return EINVAL;
 }
-
-

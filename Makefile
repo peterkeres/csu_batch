@@ -14,8 +14,8 @@
 # 'make example example2'
 
 # this is the default, run this to compile whole code base needed
-csubatch: 4175proj1.c schedual_model.c jobQueue.c	dispatching_model.c
-	gcc -Wall 4175proj1.c schedual_model.c jobQueue.c	dispatching_model.c	-o csubatch	-lpthread
+csubatch: 4175proj1.c schedule_model.c JobQueue.c	dispatching_model.c commandline.c
+	gcc 4175proj1.c schedule_model.c JobQueue.c	dispatching_model.c commandline.c	-o csubatch	-lpthread
 
 # this will create the first example batch program
 example: example_batch.c
