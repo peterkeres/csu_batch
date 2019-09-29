@@ -1,5 +1,5 @@
 /*
- * (modified by Ben Larsen, Sep. 28, 2019)
+ * (modified by Ben Larsen, Sep. 29, 2019)
  * 
  */
  
@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include <string.h>
+#include <time.h>
 #include "schedule_model.h"
 #include "jobQueue.h"
 
@@ -18,6 +19,7 @@
 #define MAXMENUARGS  8
 #define MAXCMDLINE   128 
 int subJobs = 0;
+int firstJob = 0;
 double avgCPU = 0.0;
 double avgWait = 0.0;
 double thruPut = 0.0;
@@ -31,17 +33,24 @@ int cmd_run(int nargs, char **args, struct jobQ* jobQueue) {
 		printf("Usage: run <job> <time> <priority>\n");
 		return EINVAL;
 	}
-   
+	time_t curTime;//this will be used to get the current time, or the arrival time of the new job
+	struct tm* loc_time;
+	
 	struct job newJob;//creates a new job from the provided arguments
 	newJob.jobName = strdup(args[1]);//this is the job name
-	newJob.arrivalTime = atoi(args[2]);// this is the arrival time
+	curTime = time(NULL);//getting the current time
+	loc_time = localtime(&curTime);
+	newJob.arrivalTime = (loc_time->tm_hour * 10000) + (loc_time->tm_min * 100) + (loc_time->tm_sec );// setting the arrival time
+	if(firstJob == 0){
+		firstJob = newJob.arrivalTime;
+	}
 	newJob.priority = atoi(args[3]);// this is the priority
 	newJob.timeToComplete = rand() % 360 + 1;// this is the CPU time, randomly generated
-	newJob.progress = "waiting";// set progress to wainting, update later in dispatch module
+	newJob.progress = "waiting";// set progress to waiting, update later in dispatch module
 	//addJob(jobQueue, newJob);
 	scheduleJob(jobQueue, newJob);// schedules the new job and adds it to the job queue
 	subJobs++;// increments the number of jobs
-	avgCPU = avgCPU + newJob.timeToComplete;//increment total cpu time
+	avgCPU = avgCPU + (double)newJob.timeToComplete;//increment total cpu time
 	
 	printf("Job %s was submitted.\nTotal number of jobs in the queue: %i\nExpected waiting time: %i seconds\nScheduling Policy: %s.\n", 
 	newJob.jobName, jobQueue->size, newJob.timeToComplete, jobQueue->schedPol);
@@ -55,8 +64,19 @@ int cmd_run(int nargs, char **args, struct jobQ* jobQueue) {
  * The quit command.
  */
 int cmd_quit(int nargs, char **args, struct jobQ* jobQueue) {
-	printf("Please display performance information before exiting csubatch!\n");
-        exit(0);
+	time_t curTime;
+	struct tm* loc_time;
+	curTime = time(NULL);
+	loc_time = localtime(&curTime);
+	double terminalTime = (loc_time->tm_hour * 10000) + (loc_time->tm_min * 100) + (loc_time->tm_sec );
+	if(subJobs > 0){
+		avgWait = (terminalTime - firstJob) / (double)subJobs;
+		avgCPU = avgCPU / (double)subJobs;
+		printf("Total jobs: %i, Average wait: %.3f, average CPU: %.3f\n", subJobs, avgWait, avgCPU);
+	}else{
+		printf("No jobs were submitted.\n");
+	}
+    sexit(0);
 }
 
 /*
@@ -93,6 +113,7 @@ static const char *helpmenu[] = {
 	"[fcfs] Change the scheduling policy to FCFS		",
 	"[sjf] Change the scheduling policy to SJF		",
 	"[priority] Change the scheduling policy to Priority		",
+	"[test] Run automated benchmarking for a selected sheculing policy",
         /* Please add more menu options below */
 	NULL
 };
@@ -164,11 +185,11 @@ int cmd_test(int narg, char** args, struct jobQ* jobQueue){
 	int minCPU = atoi(args[5]);
 	int maxCPU = atoi(args[6]);
 	
-	//Doing some random maths to generate performance data:
-	double turnAround = (double)(numJobs + minCPU + maxCPU) / 3;
-	double cpuTime = (double)(minCPU + maxCPU + numJobs) / numJobs;
-	double waitTime = (double)(maxCPU + priorityLvl) / numJobs;
-	double throughput = (double)priorityLvl / numJobs;
+	//Doing some maths to generate performance data:
+	double turnAround = (double)(minCPU + maxCPU) / numJobs;
+	double cpuTime = (double)(minCPU + maxCPU ) / 2;
+	double waitTime = (double)(maxCPU - minCPU) / numJobs;
+	double throughput = (double)(maxCPU - minCPU) / (2 * numJobs);
 	
 	//Displaying the performance information:
 	printf("Total number of job submitted: \t%i\n", numJobs);

@@ -81,7 +81,7 @@ void printQ(struct jobQ* jobQ){
 		int i = 0;
 		printf("Name\tCPU time\tPri\tArrival Time\tProgress\n");
 		for(i = 0; i < jobQ->size; ++i){
-			printf("%s\t  %i\t\t%i\t\t%i\t%s\n", jobQ->jobs[i].jobName, jobQ->jobs[i].timeToComplete, jobQ->jobs[i].priority, jobQ->jobs[i].arrivalTime, 
+			printf("%s\t  %i\t\t%i\t%i\t\t%s\n", jobQ->jobs[i].jobName, jobQ->jobs[i].timeToComplete, jobQ->jobs[i].priority, jobQ->jobs[i].arrivalTime, 
 			jobQ->jobs[i].progress);
 			
 		}
