@@ -2,8 +2,10 @@
  * Ben Larsen
  * 20190928
  *
+ * (modified by peter keres, Sep. 29, 2019)
  */
 
+// if this header file has already been defind, dont define it again
 #ifndef	JOBQUEUE_H
 #define JOBQUEUE_H
 

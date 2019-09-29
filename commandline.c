@@ -262,6 +262,7 @@ int cmd_dispatch(char *cmd, struct jobQ* jobQueue)
 			assert(cmdtable[i].func!=NULL);
 
             /* Call function through the cmd_table */
+						// already sending this a pointer to a jobque, no need to send address of the pointer to the jobq
 			result = cmdtable[i].func(nargs, args, jobQueue);
 			return result;
 		}

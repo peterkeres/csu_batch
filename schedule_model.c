@@ -31,10 +31,9 @@ void schedule_start(){
 	while (1){
 
 
-		// grab user input
+		// gets area ready for user input 
 		char *input_str;
 		int input_size = 64;
-
 		input_str = (char*) malloc(input_size * sizeof(char));
 		if (input_str == NULL) {
 				perror("Unable to malloc buffer");
@@ -42,13 +41,13 @@ void schedule_start(){
 		}
 		printf(">");
 
+		// watis for user to hit enter and grabs what they have
 		getline(&input_str, &input_size, stdin);
 
 		// lock mutext once we get input from readline
 		pthread_mutex_lock(&queMutex);
 
 		// send it to cmd dispatch
-
 		cmd_dispatch(input_str, jobQueue);
 
 		// unlock the mutext

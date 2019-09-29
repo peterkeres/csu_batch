@@ -83,6 +83,8 @@ int main(){
 	pthread_cond_init(&jobsInQue,NULL);
 	pthread_cond_init(&queNotFull,NULL);
 
+	//TODO: add in welcome message / print out menu
+
 	// creads the thread, calls the method test3 with that threads
 	status_schedual = pthread_create(&thread_schedual, NULL, schedule_start, NULL);
 	// makes sure the thread was created
