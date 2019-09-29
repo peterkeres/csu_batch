@@ -76,7 +76,7 @@ int cmd_quit(int nargs, char **args, struct jobQ* jobQueue) {
 	}else{
 		printf("No jobs were submitted.\n");
 	}
-    sexit(0);
+    exit(0);
 }
 
 /*
