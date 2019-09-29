@@ -31,7 +31,7 @@ void schedule_start(){
 	while (1){
 
 
-		// gets area ready for user input 
+		// gets area ready for user input
 		char *input_str;
 		int input_size = 64;
 		input_str = (char*) malloc(input_size * sizeof(char));
@@ -77,7 +77,7 @@ void scheduleJob(struct jobQ* jobQueue, struct job newJob){
 	//test.jobName = "example_batch";
 	//test2.jobName = "example_batch";
 
-	puts("locking mutext");
+
 	//pthread_mutex_lock(&queMutex);// locks the other thread from messing with the jobQueue
 
 	//addJob(jobQueue, test);// add a job to the job queue
