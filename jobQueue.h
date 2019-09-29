@@ -9,7 +9,7 @@ struct job{
 	int timeToComplete;
 	int arrivalTime;
 	char* jobName;
-	int turnAround;
+	char* progress;
 };
 
 struct jobQ{
