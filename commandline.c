@@ -50,7 +50,7 @@ int cmd_run(int nargs, char **args, struct jobQ* jobQueue) {
 	newJob.priority = atoi(args[3]);// this is the priority
 	newJob.timeToComplete = rand() % 360 + 1;// this is the CPU time, randomly generated
 	newJob.progress = "waiting";// set progress to waiting, update later in dispatch module
-	//addJob(jobQueue, newJob);
+
 	scheduleJob(jobQueue, newJob);// schedules the new job and adds it to the job queue
 	subJobs++;// increments the number of jobs
 	avgCPU = avgCPU + (double)newJob.timeToComplete;//increment total cpu time
