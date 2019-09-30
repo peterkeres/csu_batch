@@ -33,7 +33,7 @@ double thruPut = 0.0;
  */
 int cmd_run(int nargs, char **args, struct jobQ* jobQueue) {
 	if (nargs != 4) {
-		printf("Usage: run <job> <time> <priority>\n");
+		printf("Please, enter the run commands in the folowing format: run <job> <time> <priority>\n");
 		return EINVAL;
 	}
 	time_t curTime;//this will be used to get the current time, or the arrival time of the new job
